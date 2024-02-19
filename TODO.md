@@ -2,7 +2,7 @@
 
 Your new site is all yours so it doesn't matter if you break it! Try editing the code.
 
-Reference the [OwnerRez API](https://api.ownerreservations.com/help/v2) and the [MapBox API](https://docs.mapbox.com/mapbox-gl-js/api/map/)
+Reference the [MapBox API](https://docs.mapbox.com/mapbox-gl-js/api/map/) and the [AirTable API](https://github.com/Airtable/airtable.js)
 
 Use [console.log](https://developer.mozilla.org/en-US/docs/Web/API/Console/log) liberally to debug issues
 

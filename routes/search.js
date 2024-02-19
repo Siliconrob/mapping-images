@@ -11,7 +11,9 @@ module.exports = [
       tags: ["api", "Search"],
       validate: {
         params: Joi.object({
-          address: Joi.string().required().description("Free form address search"),
+          address: Joi.string()
+            .required()
+            .description("Free form address search"),
         }),
       },
     },
