@@ -6,7 +6,7 @@ This project includes a Node.js server script
 - [Node.js](https://nodejs.org/en/about/) is a popular runtime that lets you run server-side JavaScript.
 - You will need to generate a free MapBox gljs API key [MapBox](https://docs.mapbox.com/mapbox-gl-js/guides/install/).
 - You should probably get a free HERE free geocode API Key (limit 1000 API calls per day) [HERE](https://platform.here.com/portal/).
-- This project uses the [Hapijs](https://hapi.dev/) framework (I hope it makes you as happy as it does for me to use 😁) and explores basic routes on the [OwnerRez API](https://api.ownerreservations.com/help/v1).
+- This project uses the [Hapijs](https://hapi.dev/) framework (I hope it makes you as happy as it does for me to use 😁) and explores basic routes.
 - **Do not use this in production**
 
 _Last updated: 18 Feb 2023_
