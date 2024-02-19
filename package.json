@@ -1,0 +1,42 @@
+{
+  "name": "User Locaiton",
+  "description": "Magic time",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": "^16.x"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@hapi/hapi": "^21.3.3",
+    "@hapi/inert": "^7.1.0",
+    "superagent": "^8.1.2",
+    "joi": "^17.12.1",
+    "hapi-swagger": "^17.2.1",
+    "@hapi/vision": "^7.0.3",
+    "@hapipal/haute-couture": "^4.3.1",
+    "@hapi/subtext": "^7.1.0",
+    "@hapi/bourne": "^3.0.0",
+    "@hapi/content": "^6.0.0",
+    "@hapi/file": "^3.0.0",
+    "@hapi/hoek": "^11.0.4",
+    "@hapi/pez": "^5.1.0",
+    "@hapi/wreck": "^18.0.1",
+    "@hapi/b64": "^6.0.1",
+    "@hapi/nigel": "^5.0.1",
+    "@hapi/vise": "^5.0.1",
+    "@aws-sdk/client-s3": "^3.515.0",
+    "@aws-sdk/s3-request-presigner": "^3.515.0",
+    "airtable": "^0.12.2",
+    "@turf/helpers": "^6.5.0"
+  },
+  "license": "MIT",
+  "keywords": [
+    "node",
+    "mapbox gljs",
+    "airtable",
+    "hapijs"
+  ]
+}
