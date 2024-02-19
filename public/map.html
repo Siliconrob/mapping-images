@@ -135,48 +135,51 @@
       .slider-align {
         vertical-align: middle;
       }
-      
+
       .example-dropzone {
-          display: flex;
-          justify-content: center;
-          flex-flow: column;
-          background-color: hsl(138, 100%, 50%);
-          flex-basis: 100%;
-          flex-grow: 1;
-          padding: 10px;
-          border-style: dashed;
+        display: flex;
+        justify-content: center;
+        flex-flow: column;
+        background-color: hsl(138, 100%, 50%);
+        flex-basis: 100%;
+        flex-grow: 1;
+        padding: 10px;
+        border-style: dashed;
       }
 
       .example-dropzone:hover {
-          font-weight: bold;
-          color: yellow;
-          background-color: hsl(240, 100%, 50%);
+        font-weight: bold;
+        color: yellow;
+        background-color: hsl(240, 100%, 50%);
       }
-      
+
       #photoPreview {
         border-style: groove;
         justify-content: center;
       }
-      
     </style>
   </head>
   <body>
     <div id="errors" style="display: none"></div>
     <div class="parent">
       <div class="side-panel">
-        <div class="example-dropzone side-panel left-side" style="height: 30%;" id="drop_zone"
-             ondragover="dragOverHandler(event);"
-             ondrop="dropHandler(event);">
-            <p>Drag and drop photo <i>here</i>.</p>
+        <div
+          class="example-dropzone side-panel left-side"
+          style="height: 30%"
+          id="drop_zone"
+          ondragover="dragOverHandler(event);"
+          ondrop="dropHandler(event);"
+        >
+          <p>Drag and drop photo <i>here</i>.</p>
         </div>
-        <div id="photoPreview" class="side-panel left-side" style="height: 30%;">
+        <div id="photoPreview" class="side-panel left-side" style="height: 30%">
           <p>Preview will be <b>here</b></p>
         </div>
         <div id="photoDetail" class="side-panel left-side">
           <input type="text" id="photoText" placeholder="Photo description" />
           <button id="savePhoto" class="primary-button">Save</button>
         </div>
-<!--         <div id="search" class="side-panel left-side">
+        <!--         <div id="search" class="side-panel left-side">
           <input
             type="text"
             id="searchAddress"
@@ -189,118 +192,125 @@
     </div>
 
     <script>
-      
       function onDragStart(event) {
-          event.dataTransfer.setData('text/plain', event.target.id);
-          event.currentTarget.style.backgroundColor = 'yellow';
+        event.dataTransfer.setData("text/plain", event.target.id);
+        event.currentTarget.style.backgroundColor = "yellow";
       }
 
       function onDragOver(event) {
-          event.preventDefault();
+        event.preventDefault();
       }
 
       function onDrop(event) {
-          const id = event.dataTransfer.getData('text');
-          const draggableElement = document.getElementById(id);
-          const dropzone = event.target;
-          dropzone.appendChild(draggableElement);
-          event.dataTransfer.clearData();
+        const id = event.dataTransfer.getData("text");
+        const draggableElement = document.getElementById(id);
+        const dropzone = event.target;
+        dropzone.appendChild(draggableElement);
+        event.dataTransfer.clearData();
       }
-      
+
       function dragOverHandler(ev) {
-          console.log("File(s) in drop zone");
-          // Prevent default behavior (Prevent file from being opened)
-          ev.preventDefault();
+        console.log("File(s) in drop zone");
+        // Prevent default behavior (Prevent file from being opened)
+        ev.preventDefault();
       }
-      
+
       function dropHandler(ev) {
-          console.log("File(s) dropped");
+        console.log("File(s) dropped");
 
-          // Prevent default behavior (Prevent file from being opened)
-          ev.preventDefault();
-          currentFiles.splice(0, currentFiles.length)
-          document.getElementById("drop_zone").innerHTML = "";
+        // Prevent default behavior (Prevent file from being opened)
+        ev.preventDefault();
+        currentFiles.splice(0, currentFiles.length);
+        document.getElementById("drop_zone").innerHTML = "";
 
-          if (ev.dataTransfer.items) {
-              // Use DataTransferItemList interface to access the file(s)
-              [...ev.dataTransfer.items].forEach((item, i) => {
-                  // If dropped items aren't files, reject them
-                  if (item.kind === "file") {
-                      currentFile = item.getAsFile();
-                      console.log(`… currentFile[${i}].name = ${currentFile.name}`);
-                      currentFiles.push(currentFile);
-                  }
-              });
-          } else {
-              // Use DataTransfer interface to access the file(s)
-              [...ev.dataTransfer.files].forEach((file, i) => {
-                  console.log(`… file[${i}].name = ${file.name}`);
-                  currentFiles.push(file);
-              });
-          }
-          configureUploads();
+        if (ev.dataTransfer.items) {
+          // Use DataTransferItemList interface to access the file(s)
+          [...ev.dataTransfer.items].forEach((item, i) => {
+            // If dropped items aren't files, reject them
+            if (item.kind === "file") {
+              currentFile = item.getAsFile();
+              console.log(`… currentFile[${i}].name = ${currentFile.name}`);
+              currentFiles.push(currentFile);
+            }
+          });
+        } else {
+          // Use DataTransfer interface to access the file(s)
+          [...ev.dataTransfer.files].forEach((file, i) => {
+            console.log(`… file[${i}].name = ${file.name}`);
+            currentFiles.push(file);
+          });
+        }
+        configureUploads();
       }
-      
-      const toBase64 = file => new Promise((resolve, reject) => {
+
+      const toBase64 = (file) =>
+        new Promise((resolve, reject) => {
           const reader = new FileReader();
           reader.readAsDataURL(file);
           reader.onload = () => resolve(reader.result);
           reader.onerror = reject;
-      });      
-      
-      document.getElementById("savePhoto").addEventListener("click", async (e) => {
-        const currentText = document.getElementById("photoText").value || "";
-        if (currentText == "") {
-          alert("Photo description required");
-          return;
-        }
-        
-        const position = photoMarker.getLngLat() || null;
-        if (position == null) {
-          alert("You must place a marker that corresponds to the photo location");
-          return;
-        }
-        
-        const photoData = {
-          fileData: document.getElementById(currentFiles[0].name).src
-        };
-        const savePhotoUrl = `${window.location.href}upload`;                                                            
-        const savePhotoResponse = await fetch(savePhotoUrl, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(photoData)
         });
-        const shareablePhoto = await savePhotoResponse.json();        
-        const shareUrl = shareablePhoto.shareUrl || "";
-        if (shareUrl == "") {
-          return;
-        }        
-        const newRecord = {
-          photo: shareUrl,
-          publicText: currentText,
-          latitude: position.lat.toFixed(6),
-          longitude: position.lng.toFixed(6),
-        };        
-        const saveNewRecord = await fetch(`${window.location.href}locations`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newRecord)
-        });        
-        const saveNewRecordResponse = await saveNewRecord.json();
-        console.log(saveNewRecordResponse);
-        location.reload();
-      });      
-      
+
+      document
+        .getElementById("savePhoto")
+        .addEventListener("click", async (e) => {
+          const currentText = document.getElementById("photoText").value || "";
+          if (currentText == "") {
+            alert("Photo description required");
+            return;
+          }
+
+          const position = photoMarker.getLngLat() || null;
+          if (position == null) {
+            alert(
+              "You must place a marker that corresponds to the photo location"
+            );
+            return;
+          }
+
+          const photoData = {
+            fileData: document.getElementById(currentFiles[0].name).src,
+          };
+          const savePhotoUrl = `${window.location.href}upload`;
+          const savePhotoResponse = await fetch(savePhotoUrl, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(photoData),
+          });
+          const shareablePhoto = await savePhotoResponse.json();
+          const shareUrl = shareablePhoto.shareUrl || "";
+          if (shareUrl == "") {
+            return;
+          }
+          const newRecord = {
+            photo: shareUrl,
+            publicText: currentText,
+            latitude: position.lat.toFixed(6),
+            longitude: position.lng.toFixed(6),
+          };
+          const saveNewRecord = await fetch(
+            `${window.location.href}locations`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(newRecord),
+            }
+          );
+          const saveNewRecordResponse = await saveNewRecord.json();
+          console.log(saveNewRecordResponse);
+          location.reload();
+        });
+
       async function configureUploads() {
-        const uploadedFiles = document.createElement('ul');
-        const previewArea = document.getElementById("photoPreview");        
+        const uploadedFiles = document.createElement("ul");
+        const previewArea = document.getElementById("photoPreview");
         previewArea.innerHTML = "";
         for (let z of currentFiles) {
           const newFileDetail = document.createElement("li");
           newFileDetail.innerHTML = `${z.name}`;
-          newFileDetail.setAttribute('style', 'display: block;');
+          newFileDetail.setAttribute("style", "display: block;");
           uploadedFiles.appendChild(newFileDetail);
-          let dynamicImage = document.createElement('img');
+          let dynamicImage = document.createElement("img");
           dynamicImage.style.objectFit = "contain";
           dynamicImage.style.width = "100%";
           dynamicImage.style.height = "100%";
@@ -310,7 +320,7 @@
         }
         document.getElementById("drop_zone").appendChild(uploadedFiles);
       }
-      
+
       let currentFiles = [];
       let map = null;
       let photoMarker = null;
@@ -323,12 +333,12 @@
         }
         return color;
       }
-      
-      function addMarker (e) {
+
+      function addMarker(e) {
         const coordinates = e.lngLat;
-        console.log('Lng:', coordinates.lng, 'Lat:', coordinates.lat);
+        console.log("Lng:", coordinates.lng, "Lat:", coordinates.lat);
         photoMarker.setLngLat(coordinates).addTo(map);
-      }      
+      }
 
       (async () => {
         let errorDiv = document.getElementById("errors");
@@ -350,102 +360,109 @@
           center: [0, 0],
           zoom: 0, // starting zoom
         });
-        
-        map.on("load", () => {          
-          photoMarker = new mapboxgl.Marker();          
-          map.addSource('mapPoints', {
-              type: 'geojson',
-              data: data.details,
-              cluster: true,
-              clusterMaxZoom: 14, // Max zoom to cluster points on
-              clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+
+        map.on("load", () => {
+          photoMarker = new mapboxgl.Marker();
+          map.addSource("mapPoints", {
+            type: "geojson",
+            data: data.details,
+            cluster: true,
+            clusterMaxZoom: 14, // Max zoom to cluster points on
+            clusterRadius: 50, // Radius of each cluster when clustering points (defaults to 50)
           });
-          
+
           map.addLayer({
-              id: 'clusters',
-              type: 'circle',
-              source: 'mapPoints',
-              filter: ['has', 'point_count'],
-              paint: {'circle-color': [
-                      'step',
-                      ['get', 'point_count'],
-                      '#51bbd6',
-                      100,
-                      '#f1f075',
-                      750,
-                      '#f28cb1'
-                  ],
-                  'circle-radius': [
-                      'step',
-                      ['get', 'point_count'],
-                      20,
-                      100,
-                      30,
-                      750,
-                      40
-                  ]
-              }
-          });          
-          
-          map.addLayer({
-              id: 'cluster-count',
-              type: 'symbol',
-              source: 'mapPoints',
-              filter: ['has', 'point_count'],
-              layout: {
-                  'text-field': ['get', 'point_count_abbreviated'],
-                  'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-                  'text-size': 12
-              }
+            id: "clusters",
+            type: "circle",
+            source: "mapPoints",
+            filter: ["has", "point_count"],
+            paint: {
+              "circle-color": [
+                "step",
+                ["get", "point_count"],
+                "#51bbd6",
+                100,
+                "#f1f075",
+                750,
+                "#f28cb1",
+              ],
+              "circle-radius": [
+                "step",
+                ["get", "point_count"],
+                20,
+                100,
+                30,
+                750,
+                40,
+              ],
+            },
           });
-          
+
           map.addLayer({
-              id: 'unclustered-point',
-              type: 'circle',
-              source: 'mapPoints',
-              filter: ['!', ['has', 'point_count']],
-              paint: {
-                  'circle-color': getRandomColor(),
-                  'circle-radius': 6,
-                  'circle-stroke-width': 1,
-                  'circle-stroke-color': getRandomColor()
-              }
+            id: "cluster-count",
+            type: "symbol",
+            source: "mapPoints",
+            filter: ["has", "point_count"],
+            layout: {
+              "text-field": ["get", "point_count_abbreviated"],
+              "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+              "text-size": 12,
+            },
           });
-          
-          map.on('click', 'clusters', (e) => {
-              const features = map.queryRenderedFeatures(e.point, {
-                  layers: ['clusters']
+
+          map.addLayer({
+            id: "unclustered-point",
+            type: "circle",
+            source: "mapPoints",
+            filter: ["!", ["has", "point_count"]],
+            paint: {
+              "circle-color": getRandomColor(),
+              "circle-radius": 6,
+              "circle-stroke-width": 1,
+              "circle-stroke-color": getRandomColor(),
+            },
+          });
+
+          map.on("click", "clusters", (e) => {
+            const features = map.queryRenderedFeatures(e.point, {
+              layers: ["clusters"],
+            });
+            const clusterId = features[0].properties.cluster_id;
+            map
+              .getSource("mapPoints")
+              .getClusterExpansionZoom(clusterId, (err, zoom) => {
+                if (err) {
+                  return;
+                }
+                map.easeTo({
+                  center: features[0].geometry.coordinates,
+                  zoom: zoom,
+                });
               });
-              const clusterId = features[0].properties.cluster_id;
-              map.getSource('mapPoints').getClusterExpansionZoom(clusterId, (err, zoom) => {
-                  if (err) {
-                    return;
-                  }
-                  map.easeTo({
-                      center: features[0].geometry.coordinates,
-                      zoom: zoom
-                  });
-              });
-          });          
-          
-          map.on('click', 'unclustered-point', (e) => {
-              const coordinates = e.features[0].geometry.coordinates.slice();
-              const text = e.features[0].properties.text;
-              const photoUrl = JSON.parse(e.features[0].properties.photo).url;
-              while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-                  coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-              }
-            
-              const popupDetail = `<h3>${text}</h3><br/><img style="object-fit: contain; width: 100%; height: 100%;" alt="${text}" src="${photoUrl}" />`;
-            
-              new mapboxgl.Popup()
-                  .setLngLat(coordinates)
-                  .setHTML(popupDetail)
-                  .addTo(map);
           });
-          map.on('mouseenter', 'clusters', () => { map.getCanvas().style.cursor = 'pointer'; });
-          map.on('mouseleave', 'clusters', () => { map.getCanvas().style.cursor = ''; });
-          map.on('click', addMarker);          
+
+          map.on("click", "unclustered-point", (e) => {
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const text = e.features[0].properties.text;
+            const photoUrl = JSON.parse(e.features[0].properties.photo).url;
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+
+            const popupDetail = `<h3>${text}</h3><br/><img style="object-fit: contain; width: 100%; height: 100%;" alt="${text}" src="${photoUrl}" />`;
+
+            new mapboxgl.Popup()
+              .setLngLat(coordinates)
+              .setHTML(popupDetail)
+              .addTo(map);
+          });
+          map.on("mouseenter", "clusters", () => {
+            map.getCanvas().style.cursor = "pointer";
+          });
+          map.on("mouseleave", "clusters", () => {
+            map.getCanvas().style.cursor = "";
+          });
+          map.on("click", addMarker);
         });
       })();
     </script>

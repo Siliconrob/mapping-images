@@ -20,16 +20,17 @@ function validateEnvVariable(envName) {
 }
 
 module.exports = {
-  RemoveNullUndefined: obj => Object.entries(obj).reduce((a, [k, v]) => (v == null ? a : (a[k] = v, a)), {}),
+  RemoveNullUndefined: (obj) =>
+    Object.entries(obj).reduce(
+      (a, [k, v]) => (v == null ? a : ((a[k] = v), a)),
+      {}
+    ),
   AirTableBaseUrl: "https://api.airtable.com/v0",
   GeocoderUrl: {
-    HERE: "https://geocode.search.hereapi.com/v1/geocode"
+    HERE: "https://geocode.search.hereapi.com/v1/geocode",
   },
   GeneralErrorHandlerFn: async function (runFn) {
-    [
-      "mapkey",
-      "airtable_key"
-    ].forEach((z) => validateEnvVariable(z));
+    ["mapkey", "airtable_key"].forEach((z) => validateEnvVariable(z));
 
     try {
       return await runFn();
@@ -40,15 +41,13 @@ module.exports = {
   },
   DefaultStartTime: new Date(2000, 1, 1),
   Get: async function (url) {
-    return await superagent
-      .get(url)
-      .auth(process.env.airtable_key, {
-        type: 'bearer'
+    return await superagent.get(url).auth(process.env.airtable_key, {
+      type: "bearer",
     });
   },
   GetNoAuth: async function (url) {
     return await superagent
       .get(url)
-      .set("User-Agent", process.env.owner_rez_user_agent)
+      .set("User-Agent", process.env.owner_rez_user_agent);
   },
 };
