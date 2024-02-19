@@ -2,14 +2,14 @@
 
 This project includes a Node.js server script
 
-- Make sure to set all your [.env](https://support.glitch.com/t/how-do-i-set-environment-variables/3921) variables, this example uses [personal tokens](https://www.ownerreservations.com/support/articles/api-overview)
+- Make sure to set all your [.env](https://support.glitch.com/t/how-do-i-set-environment-variables/3921) variables, this example uses personal tokens
 - [Node.js](https://nodejs.org/en/about/) is a popular runtime that lets you run server-side JavaScript.
 - You will need to generate a free MapBox gljs API key [MapBox](https://docs.mapbox.com/mapbox-gl-js/guides/install/).
 - You should probably get a free HERE free geocode API Key (limit 1000 API calls per day) [HERE](https://platform.here.com/portal/).
 - This project uses the [Hapijs](https://hapi.dev/) framework (I hope it makes you as happy as it does for me to use 😁) and explores basic routes.
 - **Do not use this in production**
 
-_Last updated: 18 Feb 2023_
+_Last updated: 19 Feb 2023_
 
 ## Prerequisites
 
