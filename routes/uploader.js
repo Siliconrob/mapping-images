@@ -28,7 +28,6 @@ module.exports = [
     },
     handler: async (request, h) => {
       const input = request.payload;
-      console.log(input);
       return await appHelper.GeneralErrorHandlerFn(async () => {
         return {
           shareUrl: await uploadHelper.uploadImage(input.fileData),

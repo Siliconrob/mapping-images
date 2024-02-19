@@ -154,8 +154,11 @@
       }
 
       #photoPreview {
-        border-style: groove;
+        border-style: solid;
         justify-content: center;
+        display: flex;
+        flex-flow: column;
+        padding: 10px;
       }
     </style>
   </head>
@@ -339,6 +342,12 @@
         console.log("Lng:", coordinates.lng, "Lat:", coordinates.lat);
         photoMarker.setLngLat(coordinates).addTo(map);
       }
+      
+      function removeMarker(e) {
+        const coordinates = e.lngLat;
+        console.log("Lng:", coordinates.lng, "Lat:", coordinates.lat);
+        photoMarker.remove();
+      }      
 
       (async () => {
         let errorDiv = document.getElementById("errors");
@@ -463,6 +472,7 @@
             map.getCanvas().style.cursor = "";
           });
           map.on("click", addMarker);
+          map.on("contextmenu", removeMarker);
         });
       })();
     </script>
