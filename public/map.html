@@ -246,13 +246,13 @@
         configureUploads();
       }
 
-      const toBase64 = (file) =>
-        new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.readAsDataURL(file);
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = reject;
-        });
+      // Because the FileReader looks for an onload event async it is problematic
+      const toBase64 = (file) => new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+      });
 
       document
         .getElementById("savePhoto")
@@ -271,9 +271,8 @@
             return;
           }
 
-          const photoData = {
-            fileData: document.getElementById(currentFiles[0].name).src,
-          };
+          const base64Data = document.getElementById(currentFiles[0].name).src;
+          const photoData = { fileData: base64Data };
           const savePhotoUrl = `${window.location.href}upload`;
           const savePhotoResponse = await fetch(savePhotoUrl, {
             method: "POST",

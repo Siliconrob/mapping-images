@@ -1,13 +1,25 @@
 # Hello and welcome to using Hapijs with MapBox+AirTable!
 
+[Live site](https://mapping-images.glitch.me/)
+
 This project includes a Node.js server script
 
 - Make sure to set all your [.env](https://support.glitch.com/t/how-do-i-set-environment-variables/3921) variables, this example uses personal tokens
 - [Node.js](https://nodejs.org/en/about/) is a popular runtime that lets you run server-side JavaScript.
 - You will need to generate a free MapBox gljs API key [MapBox](https://docs.mapbox.com/mapbox-gl-js/guides/install/).
+- You will need to generate a free AirTable API key [AirTable](https://airtable.com/)
 - You should probably get a free HERE free geocode API Key (limit 1000 API calls per day) [HERE](https://platform.here.com/portal/).
 - This project uses the [Hapijs](https://hapi.dev/) framework (I hope it makes you as happy as it does for me to use 😁) and explores basic routes.
 - **Do not use this in production**
+
+
+## Sample AirTable Format
+```
+Id,Approved,Photo,PublicText,Latitude,Longitude,SubmissionDate,ApprovalDate
+UUID, checkbox, url, text, number (6), number (6), utc date, FORMULA = IF(Approved = 1, LAST_MODIFIED_TIME(), BLANK())
+6b85b812-bd0d-4aad-8597-09eef7186ddb,checked,Prestige_Worldwide_logo.png (url here),Investors? Possibly You!,41.123457,-124.156738,2/13/2024 9:00pm,2/19/2024 2:35am
+```
+
 
 _Last updated: 19 Feb 2023_
 
