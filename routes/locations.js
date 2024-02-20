@@ -78,7 +78,7 @@ module.exports = [
             .guid()
             .default(`${crypto.randomUUID()}`)
             .optional()
-            .description("RecordUUID"),
+            .description("Record UUID"),
           photo: Joi.string().default("").required().description("Photo url"),
           publicText: Joi.string()
             .default("This is some text")
@@ -107,8 +107,7 @@ module.exports = [
         PublicText: request.payload.publicText,
         Latitude: request.payload.latitude,
         Longitude: request.payload.longitude,
-        SubmissionDate: new Date().toISOString(),
-        ApprovalDate: null,
+        SubmissionDate: new Date().toISOString()
       };
 
       return await appHelper.GeneralErrorHandlerFn(async () => {
