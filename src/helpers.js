@@ -48,6 +48,6 @@ module.exports = {
   GetNoAuth: async function (url) {
     return await superagent
       .get(url)
-      .set("User-Agent", process.env.owner_rez_user_agent);
+      .set("User-Agent", process.env.no_auth_agent);
   },
 };
