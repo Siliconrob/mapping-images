@@ -28,7 +28,7 @@
     "@hapi/nigel": "^5.0.1",
     "@hapi/vise": "^5.0.1",
     "@aws-sdk/client-s3": "^3.726.1",
-    "@aws-sdk/s3-request-presigner": "^3.726.1",
+    "@aws-sdk/s3-request-presigner": "^3.910.0",
     "airtable": "^0.12.2",
     "@turf/helpers": "^7.2.0"
   },
