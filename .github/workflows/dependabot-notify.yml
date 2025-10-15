@@ -11,11 +11,11 @@ concurrency:
 
 jobs:
   notify-slack:
-    if: github.actor == 'dependabot[bot]'
+    # if: github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: 📢 Echo commands
-        if: ${{ !cancelled() }}
+        # if: ${{ !cancelled() }}
         run: |
           echo ":warning: New Dependabot PR in *${{ github.repository }}*:"
           echo "*Title:* ${{ github.event.pull_request.title }}"
