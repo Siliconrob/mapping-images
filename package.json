@@ -17,7 +17,7 @@
     "hapi-swagger": "^17.3.2",
     "@hapi/vision": "^7.0.3",
     "@hapipal/haute-couture": "^4.3.1",
-    "@hapi/subtext": "^7.1.0",
+    "@hapi/subtext": "^8.1.1",
     "@hapi/bourne": "^3.0.0",
     "@hapi/content": "^6.0.0",
     "@hapi/file": "^3.0.0",
