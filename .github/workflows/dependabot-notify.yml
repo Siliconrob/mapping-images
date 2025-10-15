@@ -1,0 +1,23 @@
+name: 🔨 Dependabot PR Notify Slack
+
+on:
+  pull_request:
+    types: [opened]
+    branches: [master]
+
+concurrency:
+  group: ci-${{ github.event.workflow_run.head_branch || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  notify-slack:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📢 Echo commands
+        if: ${{ !cancelled() }}
+        run: |
+          echo ":warning: New Dependabot PR in *${{ github.repository }}*:"
+          echo "*Title:* ${{ github.event.pull_request.title }}"
+          echo "*Author:* ${{ github.actor }}"
+          echo "*Link:* ${{ github.event.pull_request.html_url }}""
