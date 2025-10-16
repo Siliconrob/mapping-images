@@ -28,7 +28,7 @@ jobs:
         env:
           TEST_REPO_SECRET: ${{ secrets.TEST_REPO_SECRET }}
           TEST_DEPENDABOT_SECRET: ${{ secrets.TEST_DEPENDABOT_REPO_SECRET }}
-        if: github.actor == 'dependabot[bot]' || contains(github.ref_name, 'testaction')
+        if: github.actor == 'dependabot[bot]' || contains(github.head_ref, 'testaction')
         run: |
           echo "Dependabot secret: $TEST_DEPENDABOT_SECRET"
           echo "Repo action secret: $TEST_REPO_SECRET"
