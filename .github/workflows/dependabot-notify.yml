@@ -22,7 +22,7 @@ jobs:
           MY_VAL: ${{ github.ref_name }}
         run: |
           import os          
-          print(os.getenv("MY_VAL")
+          print(os.getenv("MY_VAL"))
         shell: python    
       - name: 📢 Echo commands
         env:
