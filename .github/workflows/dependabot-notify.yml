@@ -19,11 +19,10 @@ jobs:
     steps:
       - name: python print secret
         env:
-          MY_VAL: ${{ secrets.TEST_REPO_SECRET }}
+          MY_VAL: ${{ github.ref_name }}
         run: |
-          import os
-          for q in (os.getenv("MY_VAL")):
-            print(q)
+          import os          
+          print(os.getenv("MY_VAL")
         shell: python    
       - name: 📢 Echo commands
         env:
