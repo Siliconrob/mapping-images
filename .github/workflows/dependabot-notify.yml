@@ -5,6 +5,9 @@ on:
     types: [opened]
     branches: [main]
 
+env:
+  ACTIONS_STEP_DEBUG: true
+
 concurrency:
   group: ci-${{ github.event.workflow_run.head_branch || github.ref }}
   cancel-in-progress: true
