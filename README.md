@@ -1,6 +1,6 @@
 # Hello and welcome to using Hapijs with MapBox+AirTable!
 
-[Live site](https://mapping-images.glitch.me/) - **!!Glitch is DISCONTINUED SADNESS!!**
+[Live site](https://mapping-images.glitch.me/) - **!!Glitch is DISCONTINUED!!**
 
 This project includes a Node.js server script
 
