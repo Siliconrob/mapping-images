@@ -17,8 +17,8 @@ jobs:
       - name: 📢 Echo commands
         # if: ${{ !cancelled() }}
         run: |
-          echo "Dependabot secret: {{ secrets.TEST_DEPENDABOT_REPO_SECRET }}"
-          echo "Repo action secret: {{ secrets.TEST_REPO_SECRET }}"
+          echo "Dependabot secret: ${{ secrets.TEST_DEPENDABOT_REPO_SECRET }}"
+          echo "Repo action secret: ${{ secrets.TEST_REPO_SECRET }}"
           echo ":warning: New Dependabot PR in *${{ github.repository }}*:"
           echo "*Title:* ${{ github.event.pull_request.title }}"
           echo "*Author:* ${{ github.actor }}"
