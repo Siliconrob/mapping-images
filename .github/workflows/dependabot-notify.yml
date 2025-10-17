@@ -19,10 +19,6 @@ on:
         description: 'Skip dependabot check'
         type: boolean
         required: true        
-      tags:
-        description: 'test action'
-        required: false
-        type: boolean    
 env:
   ACTIONS_STEP_DEBUG: true
 
