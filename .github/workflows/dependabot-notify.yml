@@ -27,7 +27,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  notify-slack:
+  run-and-scan:
     if: github.actor == 'dependabot[bot]' || ${{ inputs.run_manual }}
     runs-on: ubuntu-latest
     steps:
@@ -42,7 +42,7 @@ jobs:
         env:
           TEST_REPO_SECRET: ${{ secrets.TEST_REPO_SECRET }}
           TEST_DEPENDABOT_SECRET: ${{ secrets.TEST_DEPENDABOT_REPO_SECRET }}
-        if: github.actor == 'dependabot[bot]' || contains(github.head_ref, 'testaction')
+        if: github.actor == 'dependabot[bot]'  || ${{ inputs.run_manual }}
         run: |
           echo "Dependabot secret: $TEST_DEPENDABOT_SECRET"
           echo "Repo action secret: $TEST_REPO_SECRET"
