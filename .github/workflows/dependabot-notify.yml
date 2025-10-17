@@ -4,7 +4,25 @@ on:
   pull_request:
     types: [opened]
     branches: [main]
-
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+      run_manual:
+        description: 'Skip dependabot check'
+        type: boolean
+        required: true        
+      tags:
+        description: 'test action'
+        required: false
+        type: boolean    
 env:
   ACTIONS_STEP_DEBUG: true
 
@@ -14,7 +32,7 @@ concurrency:
 
 jobs:
   notify-slack:
-    # if: github.actor == 'dependabot[bot]'
+    if: github.actor == 'dependabot[bot]' || ${{ inputs.run_manual }}
     runs-on: ubuntu-latest
     steps:
       - name: python print secret
