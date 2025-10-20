@@ -15,12 +15,17 @@ on:
         - info
         - warning
         - debug
-      run_manual:
+      runJob:
+        description: 'Skip dependabot check'
+        type: boolean
+        required: true
+      enableDebug:
         description: 'Skip dependabot check'
         type: boolean
         required: true        
 env:
-  ACTIONS_STEP_DEBUG: true
+  ACTIONS_STEP_DEBUG: ${{ inputs.enableDebug }}
+  RUN_JOB_FLAG: ${{ inputs.runJob }}
 
 concurrency:
   group: ci-${{ github.event.workflow_run.head_branch || github.ref }}
@@ -28,15 +33,20 @@ concurrency:
 
 jobs:
   run-and-scan:
-    if: github.actor == 'dependabot[bot]' || ${{ inputs.run_manual }}
+    # if: github.actor == 'dependabot[bot]' || ${{ inputs.runJob }}
     runs-on: ubuntu-latest
     steps:
+      - name: Initialize Job Run
+        if: ${{ env.RUN_JOB_FLAG }} == '' || ${{ env.RUN_JOB_FLAG }} == false
+        run: echo "RUN_JOB_FLAG=${{ github.actor == 'dependabot[bot]' }}" >> $GITHUB_ENV
       - name: python print secret
         env:
           MY_VAL: ${{ github.ref_name }}
+          TEST_VAL: ${{ env.RUN_JOB_FLAG }}
         run: |
           import os          
           print(os.getenv("MY_VAL"))
+          print(os.getenv("TEST_VAL"))
         shell: python    
       - name: 📢 Echo commands
         env:
