@@ -1,4 +1,4 @@
-blename: 🔨 Dependabot PR Echo
+name: 🔨 Dependabot PR Echo
 
 on:
   pull_request:
