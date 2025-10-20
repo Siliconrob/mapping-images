@@ -33,12 +33,11 @@ concurrency:
 
 jobs:
   run-and-scan:
-    # if: github.actor == 'dependabot[bot]' || ${{ inputs.runJob }}
     runs-on: ubuntu-latest
     steps:
       - name: Initialize Job Run
-        if: ${{ env.RUN_JOB_FLAG == '' }} || ${{ env.RUN_JOB_FLAG == 'false' }}
-        run: echo "RUN_JOB_FLAG='${{ github.actor == 'dependabot[bot]' }}'" >> $GITHUB_ENV
+        if: ${{ env.RUN_JOB_FLAG != 'true' }}
+        run: echo "RUN_JOB_FLAG=${{ github.actor == 'dependabot[bot]' }}" >> $GITHUB_ENV
       - name: python print secret
         env:
           MY_VAL: ${{ github.ref_name }}
@@ -52,7 +51,7 @@ jobs:
         env:
           TEST_REPO_SECRET: ${{ secrets.TEST_REPO_SECRET }}
           TEST_DEPENDABOT_SECRET: ${{ secrets.TEST_DEPENDABOT_REPO_SECRET }}        
-        if: ${{ env.RUN_JOB_FLAG =='true' }}
+        if: ${{ env.RUN_JOB_FLAG }}
         run: |
           echo "RUN_JOB_FLAG: ${{ env.RUN_JOB_FLAG }}"
           echo "Dependabot secret: $TEST_DEPENDABOT_SECRET"
