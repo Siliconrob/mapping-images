@@ -38,7 +38,7 @@ jobs:
     steps:
       - name: Initialize Job Run
         if: ${{ env.RUN_JOB_FLAG == '' }} || ${{ env.RUN_JOB_FLAG == 'false' }}
-        run: echo "RUN_JOB_FLAG=${{ github.actor == 'dependabot[bot]' }}" >> $GITHUB_ENV
+        run: echo "RUN_JOB_FLAG='${{ github.actor == 'dependabot[bot]' }}'" >> $GITHUB_ENV
       - name: python print secret
         env:
           MY_VAL: ${{ github.ref_name }}
