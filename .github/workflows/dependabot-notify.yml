@@ -1,4 +1,4 @@
-name: 🔨 Dependabot PR Echo
+blename: 🔨 Dependabot PR Echo
 
 on:
   pull_request:
@@ -20,7 +20,7 @@ on:
         type: boolean
         required: true
       enableDebug:
-        description: 'Skip dependabot check'
+        description: 'Set ACTIONS_STEP_DEBUG flag'
         type: boolean
         required: true        
 env:
