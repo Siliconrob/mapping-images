@@ -8,8 +8,8 @@ jobs:
     name: Test job implementation
     runs-on: ubuntu-latest
     steps:
-      - name: Get PR
-        id: get-pr
+      - name: Test using requests
+        id: requests-test
         shell: python
         run: |
           import requests
