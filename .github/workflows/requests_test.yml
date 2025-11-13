@@ -14,7 +14,7 @@ jobs:
         run: |
           import requests
 
-          url = "https://us1.locationiq.org/v1/search.php?key=7822f557264c69cb711b&q=dfw&format=json"
+          url = "https://us1.locationiq.org/v1/search.php?key=${{ secrets.LOCATION_IQ }}&q=dfw&format=json"
           payload = {}
           files = {}
           headers = {}
