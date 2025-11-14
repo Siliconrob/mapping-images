@@ -14,10 +14,14 @@ jobs:
         run: |
           import requests
 
-          url = "https://us1.locationiq.org/v1/search.php?key=${{ secrets.LOCATION_IQ }}&q=dfw&format=json"
-          payload = {}
-          files = {}
-          headers = {}
-          response = requests.request("GET", url, headers=headers, data=payload, files=files)
-          response.raise_for_status()
-          print(response.json())
+          def main() -> None:
+            url = "https://us1.locationiq.org/v1/search.php?key=${{ secrets.LOCATION_IQ }}&q=dfw&format=json"
+            payload = {}
+            files = {}
+            headers = {}
+            response = requests.request("GET", url, headers=headers, data=payload, files=files)
+            response.raise_for_status()
+            print(response.json())
+            
+          if __name__ == "main":          
+            main()
