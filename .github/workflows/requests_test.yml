@@ -14,14 +14,28 @@ jobs:
         run: |
           import requests
 
-          def main() -> None:
+          def get_test() -> None:
             url = "https://us1.locationiq.org/v1/search.php?key=${{ secrets.LOCATION_IQ }}&q=dfw&format=json"
-            payload = {}
-            files = {}
             headers = {}
-            response = requests.request("GET", url, headers=headers, data=payload, files=files)
+            response = requests.get(, url, headers=headers)
             response.raise_for_status()
-            print(response.json())
+            print(response.json())          
+
+          def post_test() -> None:
+            url = "https://jsonplaceholder.typicode.com/posts"
+            payload = {
+              title: 'foo',
+              body: 'bar',
+              userId: 1,
+            }
+            headers = {}
+            response = requests.post(url, headers=headers, data=payload)
+            response.raise_for_status()
+            print(response.json()) 
+
+          def main() -> None:
+            get_test()
+            post_test()
             
-          if __name__ == "main":          
+          if __name__ == "__main__":          
             main()
