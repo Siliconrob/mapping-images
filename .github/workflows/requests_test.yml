@@ -13,11 +13,12 @@ jobs:
         shell: python
         run: |
           import requests
+          import json
 
           def get_test() -> None:
             url = "https://us1.locationiq.org/v1/search.php?key=${{ secrets.LOCATION_IQ }}&q=dfw&format=json"
             headers = {}
-            response = requests.get(, url, headers=headers)
+            response = requests.get(url, headers=headers)
             response.raise_for_status()
             print(response.json())          
 
@@ -29,7 +30,7 @@ jobs:
               userId: 1,
             }
             headers = {}
-            response = requests.post(url, headers=headers, data=payload)
+            response = requests.post(url, headers=headers, data=json.dump(payload))
             response.raise_for_status()
             print(response.json()) 
 
