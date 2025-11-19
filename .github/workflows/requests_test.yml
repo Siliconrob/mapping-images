@@ -26,7 +26,7 @@ jobs:
           import json
 
           def get_test() -> None:
-            url = "https://us1.locationiq.org/v1/search.php?key=${{ secrets.LOCATION_IQ }}&q=dfw&format=json"
+            url = "https://us1.locationiq.org/v1/search.php?key=${{ secrets[format('{0}', env.LOCATION_NAME)] }}&q=dfw&format=json"
             headers = {}
             response = requests.get(url, headers=headers)
             response.raise_for_status()
