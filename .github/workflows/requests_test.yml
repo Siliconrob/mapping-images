@@ -2,12 +2,22 @@ name: Requests test
 
 on:
   workflow_dispatch:
+    inputs:
+      secretKey:
+        description: 'Secret Key Name'
+        default: ''
 
 jobs:
   test-job:
     name: Test job implementation
     runs-on: ubuntu-latest
+    env:
+      LOCATION_NAME: ${{ inputs.secretKey || 'LOCATION_IQ' }}
     steps:
+      - name: Echo
+        id: echo-test
+        run: |
+          echo ${{ secrets[format('{0}', env.LOCATION_NAME)] }}
       - name: Test using requests
         id: requests-test
         shell: python
