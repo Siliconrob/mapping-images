@@ -30,7 +30,7 @@ jobs:
             get_params = {
               "q": "dfw",
               "format": "json",
-              "key": ${{ secrets[format('{0}', env.LOCATION_ID)] }}
+              "key": "${{ secrets[format('{0}', env.LOCATION_ID)] }}"
             }         
             url = f"https://us1.locationiq.org/v1/search.php?{urlencode(get_params)}"
             headers = {}
