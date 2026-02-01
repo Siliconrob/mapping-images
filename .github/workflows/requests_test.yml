@@ -25,6 +25,7 @@ jobs:
         run: |
           import requests
           import json
+          from urllib.parse import urlencode
 
           def get_test() -> None:
             get_params = {
