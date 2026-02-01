@@ -1,0 +1,21 @@
+name: Echo test
+
+on:
+  workflow_dispatch:
+    inputs:
+      secretKey:
+        description: 'Secret Key Name'
+        default: ''
+
+env:
+  LOCATION_ID: ${{ inputs.secretKey || 'LOCATION_IQ' }}
+
+jobs:
+  test-job:
+    name: Echo test job implementation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        id: echo-test
+        run: |
+          echo ${{ secrets[format('{0}', env.LOCATION_ID)] }}
